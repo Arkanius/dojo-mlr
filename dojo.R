@@ -1,3 +1,5 @@
+setwd('~/Projects/dojo-mlr')
+getwd()
 ## Etapa 1 - Coletando os Dados
 data <- read.csv("./bc_data.csv", stringsAsFactors = TRUE)
 
@@ -12,6 +14,9 @@ normalize <- function(x) {
   return ((x - min(x)) / (max(x) - min(x)))
 }
 
+normalize(c(1, 2, 3, 4, 5))
+normalize(c(10, 20, 30, 40, 50))
+
 normalizedData = as.data.frame(lapply(data[1:569, 2:31], normalize))
 str(normalizedData)
 class(normalizedData)
@@ -24,7 +29,7 @@ testData = normalizedData[470:569, ]
 
 
 # ou usar o caTools, o resultado deve ser o mesmo
-library(caTools)
+#library(caTools)
 
 # set.seed(101)
 # sample <- sample.split(normalizedData$radius_mean, SplitRatio = 0.70)
@@ -36,12 +41,13 @@ library(caTools)
 # testData <- subset(normalizedData, sample = FALSE)
 
 
-# trainingLabelsData = data[1:469, 1]
-# testLabelsData = data[470:569, 1]
+trainingLabelsData = data[1:469, 1]
+testLabelsData = data[470:569, 1]
 
 
 ## Etapa 5 - Treinamento do modelo
 library(class)
+
 
 model <- knn(
   train = trainingData,
@@ -56,6 +62,7 @@ head(trainingLabelsData)
 head(model)
 
 ## Etapa 6 - Resultado do modelo
+install.packages("gmodels")
 library(gmodels)
 ?CrossTable
 
